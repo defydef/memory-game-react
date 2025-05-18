@@ -5,7 +5,7 @@ export default function Header({ isGameOn, onClickRestart }) {
         <p>&#9776;&nbsp;Menu</p>
       </div>
       <div className="col-span-4 col-start-2 flex justify-center pt-4">
-        <h1 className="uppercase tracking-wider">
+        <h1 className="uppercase tracking-wider text-5xl">
           Memory<span className=" text-md">✨</span>
         </h1>
       </div>
@@ -15,7 +15,7 @@ export default function Header({ isGameOn, onClickRestart }) {
             className="cursor-pointer underline underline-offset-4"
             onClick={onClickRestart}
           >
-            Exit
+            Pause
           </button>
         </div>
       )}

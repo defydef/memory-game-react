@@ -40,6 +40,7 @@ export default function App() {
   }, [matchingCards, numOfPairs]);
 
   async function startGame(e) {
+    setLevel(level);
     e.preventDefault();
     if (numOfPairs > 0) {
       try {
@@ -129,8 +130,9 @@ export default function App() {
   function restartGame() {
     setIsGameOver(false);
     setIsGameOn(false);
-    setMatchingCards([]);
-    setSelectedCards([]);
+    // setMatchingCards([]);
+    // setSelectedCards([]);
+    setLevel(level);
   }
 
   const handleRadioChange = (e) => {
@@ -144,6 +146,7 @@ export default function App() {
         onStartGame={startGame}
         onSelectLevel={handleRadioChange}
         isGameOn={isGameOn}
+        level={level}
       />
       <MemoryCard
         handleClick={turnCard}

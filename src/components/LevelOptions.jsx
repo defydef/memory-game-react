@@ -1,4 +1,4 @@
-export default function LevelOptions({ submitLevel }) {
+export default function LevelOptions({ submitLevel, level }) {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex">
@@ -9,7 +9,7 @@ export default function LevelOptions({ submitLevel }) {
           onChange={submitLevel}
           name="level"
           className="radio radio-accent"
-          defaultChecked
+          defaultChecked={level === "easy"}
         />
         <label htmlFor="easy" className="cursor-pointer">
           &nbsp;Easy
@@ -23,6 +23,7 @@ export default function LevelOptions({ submitLevel }) {
           onChange={submitLevel}
           name="level"
           className="radio radio-accent"
+          defaultChecked={level === "medium"}
         />
         <label htmlFor="medium" className="cursor-pointer">
           &nbsp;Medium
@@ -36,6 +37,7 @@ export default function LevelOptions({ submitLevel }) {
           onChange={submitLevel}
           name="level"
           className="radio radio-accent"
+          defaultChecked={level === "hard"}
         />
         <label htmlFor="hard" className="cursor-pointer">
           &nbsp;Hard
