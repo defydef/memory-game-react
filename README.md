@@ -1,12 +1,30 @@
-# React + Vite
+# 🧠 Memory Game
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple and fun memory matching game built using **React**. Test your memory by flipping cards and matching pairs!
 
-Currently, two official plugins are available:
+## 🚀 Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[Live Demo](https://memory-game-react-dusky.vercel.app/)
 
-## Expanding the ESLint configuration
+## 📸 Screenshot
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+![Memory Game Screenshot](./memory-game-screenshot.png)
+
+## 🛠️ Features
+
+- Flip cards to reveal images
+- Match pairs to score
+- Responsive design
+
+## 🧰 Tech Stack
+
+- **React**
+- **Tailwind CSS** for styling
+
+## 📦 Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/defydef/memory-game-react.git
+   cd memory-game-react
+   ```
