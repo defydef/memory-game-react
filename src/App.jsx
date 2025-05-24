@@ -13,9 +13,8 @@ export default function App() {
   const [matchingCards, setMatchingCards] = useState([]);
   const [isGameOver, setIsGameOver] = useState(false);
   const [level, setLevel] = useState("easy");
+  const [isPaused, setIsPaused] = useState(false);
 
-  // const emojiURL = "/api/api/emojis?group=animals-nature";
-  // const emojiURL = "https://www.emoji.family/api/emojis?group=animals-nature";
   const group = "animals-nature";
   const { width, height } = useWindowSize();
   const numOfPairs =
@@ -38,14 +37,16 @@ export default function App() {
 
   useEffect(() => {
     // set game over when the length of matchingCards has reached numOfPairs
-    if (matchingCards.length === numOfPairs && numOfPairs !== -1)
+    if (matchingCards.length === numOfPairs) {
       setIsGameOver(true);
+      setIsPaused(false);
+    }
   }, [matchingCards, numOfPairs]);
 
   async function startGame(e) {
     setLevel(level);
     e.preventDefault();
-    if (numOfPairs > 0) {
+    if (!isPaused) {
       try {
         const response = await fetch(
           `/api/emojis?group=${encodeURIComponent(group)}`
@@ -64,6 +65,8 @@ export default function App() {
       } catch (err) {
         console.error(err);
       }
+    } else {
+      setIsGameOn(true);
     }
   }
 
@@ -134,6 +137,7 @@ export default function App() {
     setIsGameOver(false);
     setIsGameOn(false);
     setLevel(level);
+    setIsPaused(true);
   }
 
   const handleRadioChange = (e) => {
