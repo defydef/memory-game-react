@@ -4,7 +4,7 @@ import LevelOptions from "./LevelOptions";
 export default function Form({ onStartGame, onSelectLevel, isGameOn, level }) {
   return (
     !isGameOn && (
-      <form className="flex flex-col items-center gap-8">
+      <form className="flex flex-col items-center gap-8 pt-2">
         <div>Please select a level</div>
         <LevelOptions submitLevel={onSelectLevel} level={level} />
         <RegularButton handleClick={onStartGame}>Start Game</RegularButton>

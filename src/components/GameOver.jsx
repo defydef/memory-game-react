@@ -4,7 +4,7 @@ import Confetti from "react-confetti";
 export default function GameOver({ isGameOver, restartGame, width, height }) {
   return (
     isGameOver && (
-      <div>
+      <div className="flex flex-col items-center gap-8 pt-10">
         <p>You Win!</p>
         <RegularButton handleClick={restartGame}>Restart Game</RegularButton>
         <Confetti width={width} height={height} />

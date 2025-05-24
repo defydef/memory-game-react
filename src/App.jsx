@@ -14,12 +14,15 @@ export default function App() {
   const [isGameOver, setIsGameOver] = useState(false);
   const [level, setLevel] = useState("easy");
 
+  const emojiURL = "/api/api/emojis?group=animals-nature";
   const { width, height } = useWindowSize();
   const numOfPairs =
     level === "easy" ? 5 : level === "medium" ? 10 : level === "hard" ? 20 : -1;
 
+  console.log("matching: ", matchingCards, "selected: ", selectedCards);
+
   useEffect(() => {
-    // check if the name in selected cards are matching
+    // check if the annotation in selected cards are matching
     function checkName() {
       if (selectedCards.length === 2) {
         if (selectedCards[0].name === selectedCards[1].name) {
@@ -44,9 +47,7 @@ export default function App() {
     e.preventDefault();
     if (numOfPairs > 0) {
       try {
-        const response = await fetch(
-          "https://emojihub.yurace.pro/api/all/category/animals-and-nature"
-        );
+        const response = await fetch(emojiURL);
 
         if (!response.ok) {
           throw new Error("Could not fetch data from API");
@@ -58,6 +59,7 @@ export default function App() {
 
         setEmojisData(emojisArray);
         setIsGameOn(true);
+        console.log(emojisArray);
       } catch (err) {
         console.error(err);
       }
@@ -130,8 +132,6 @@ export default function App() {
   function restartGame() {
     setIsGameOver(false);
     setIsGameOn(false);
-    // setMatchingCards([]);
-    // setSelectedCards([]);
     setLevel(level);
   }
 

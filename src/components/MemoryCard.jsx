@@ -1,5 +1,3 @@
-import { decodeEntity } from "html-entities";
-
 export default function MemoryCard({
   handleClick,
   data,
@@ -11,7 +9,7 @@ export default function MemoryCard({
     const isSelectedCard =
       selectedCards.find((card) => card.index === index) !== undefined;
     const isMatchingCard =
-      matchingCards.find((cardArr) => cardArr[0].name === emoji.name) !==
+      matchingCards.find((cardArr) => cardArr[0].name === emoji.annotation) !==
       undefined;
 
     const cardStyle = isMatchingCard
@@ -31,11 +29,9 @@ export default function MemoryCard({
         <li key={index} className={`card-item ${cardStyle}`}>
           <button
             className={`emoji btn--emoji ${btnStyle}`}
-            onClick={() => handleClick(emoji.name, index)}
+            onClick={() => handleClick(emoji.annotation, index)}
           >
-            {isSelectedCard || isMatchingCard
-              ? decodeEntity(emoji.htmlCode[0])
-              : `?`}
+            {isSelectedCard || isMatchingCard ? emoji.emoji : `?`}
           </button>
         </li>
       )
