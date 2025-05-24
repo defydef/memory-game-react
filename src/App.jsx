@@ -14,7 +14,8 @@ export default function App() {
   const [isGameOver, setIsGameOver] = useState(false);
   const [level, setLevel] = useState("easy");
 
-  const emojiURL = "/api/api/emojis?group=animals-nature";
+  // const emojiURL = "/api/api/emojis?group=animals-nature";
+  const emojiURL = "https://www.emoji.family/api/emojis?group=animals-nature";
   const { width, height } = useWindowSize();
   const numOfPairs =
     level === "easy" ? 5 : level === "medium" ? 10 : level === "hard" ? 20 : -1;
