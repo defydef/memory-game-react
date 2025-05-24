@@ -15,12 +15,11 @@ export default function App() {
   const [level, setLevel] = useState("easy");
 
   // const emojiURL = "/api/api/emojis?group=animals-nature";
-  const emojiURL = "https://www.emoji.family/api/emojis?group=animals-nature";
+  // const emojiURL = "https://www.emoji.family/api/emojis?group=animals-nature";
+  const group = "animals-nature";
   const { width, height } = useWindowSize();
   const numOfPairs =
     level === "easy" ? 5 : level === "medium" ? 10 : level === "hard" ? 20 : -1;
-
-  console.log("matching: ", matchingCards, "selected: ", selectedCards);
 
   useEffect(() => {
     // check if the annotation in selected cards are matching
@@ -48,7 +47,9 @@ export default function App() {
     e.preventDefault();
     if (numOfPairs > 0) {
       try {
-        const response = await fetch(emojiURL);
+        const response = await fetch(
+          `/api/emojis?group=${encodeURIComponent(group)}`
+        );
 
         if (!response.ok) {
           throw new Error("Could not fetch data from API");
@@ -60,7 +61,6 @@ export default function App() {
 
         setEmojisData(emojisArray);
         setIsGameOn(true);
-        console.log(emojisArray);
       } catch (err) {
         console.error(err);
       }
