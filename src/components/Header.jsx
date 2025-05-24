@@ -1,4 +1,4 @@
-export default function Header({ isGameOn, onClickRestart }) {
+export default function Header({ isGameOn, onPause }) {
   return (
     <div className="grid grid-cols-6 gap-4 pb-8">
       <div className="flex items-center pl-6 cursor-pointer text-2xl">
@@ -13,7 +13,7 @@ export default function Header({ isGameOn, onClickRestart }) {
         <div className="text-right pr-6 pt-2">
           <button
             className="cursor-pointer underline underline-offset-4"
-            onClick={onClickRestart}
+            onClick={onPause}
           >
             Pause
           </button>

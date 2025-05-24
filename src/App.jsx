@@ -5,6 +5,7 @@ import MemoryCard from "../src/components/MemoryCard";
 import Header from "./components/Header";
 import GameOver from "./components/GameOver";
 import Main from "./components/Main";
+import Modal from "./components/Modal";
 
 export default function App() {
   const [isGameOn, setIsGameOn] = useState(false);
@@ -133,11 +134,17 @@ export default function App() {
     }
   }
 
-  function restartGame() {
-    setIsGameOver(false);
-    setIsGameOn(false);
-    setLevel(level);
+  function pauseGame() {
     setIsPaused(true);
+    document.getElementById("modal").showModal();
+  }
+
+  function restartGame() {
+    setIsGameOn(false);
+    setIsGameOver(false);
+    setSelectedCards([]);
+    setMatchingCards([]);
+    setLevel("easy");
   }
 
   const handleRadioChange = (e) => {
@@ -146,7 +153,7 @@ export default function App() {
 
   return (
     <Main>
-      <Header isGameOn={isGameOn} onClickRestart={restartGame} />
+      <Header isGameOn={isGameOn} onPause={pauseGame} />
       <Form
         onStartGame={startGame}
         onSelectLevel={handleRadioChange}
@@ -164,8 +171,9 @@ export default function App() {
         width={width}
         height={height}
         isGameOver={isGameOver}
-        restartGame={restartGame}
+        onStartGame={restartGame}
       />
+      <Modal />
     </Main>
   );
 }
