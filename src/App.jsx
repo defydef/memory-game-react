@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import GameOver from "./components/GameOver";
 import Main from "./components/Main";
 import Modal from "./components/Modal";
+import Timer from "./components/Timer";
 
 export default function App() {
   const [isGameOn, setIsGameOn] = useState(false);
@@ -16,10 +17,30 @@ export default function App() {
   const [level, setLevel] = useState("easy");
   const [isPaused, setIsPaused] = useState(false);
   const [iconGroup, setIconGroup] = useState("");
+  const [time, setTime] = useState(120); // countdown starts from second 120
+  const [result, setResult] = useState("");
 
   const { width, height } = useWindowSize();
   const numOfPairs =
     level === "easy" ? 5 : level === "medium" ? 10 : level === "hard" ? 20 : -1;
+
+  // Pause timer when game is paused
+  useEffect(() => {
+    let timer;
+
+    if (isGameOn && !isGameOver && !isPaused && time > 0) {
+      timer = setInterval(() => {
+        setTime((prevTime) => prevTime - 1);
+      }, 1000);
+    }
+
+    if (time === 0 && isGameOn && !isPaused) {
+      setIsGameOver(true);
+      setResult("lose");
+    }
+
+    return () => clearInterval(timer);
+  }, [isGameOn, isGameOver, isPaused, time]);
 
   useEffect(() => {
     // check if the annotation in selected cards are matching
@@ -40,9 +61,26 @@ export default function App() {
     // set game over when the length of matchingCards has reached numOfPairs
     if (matchingCards.length === numOfPairs) {
       setIsGameOver(true);
+      setResult("win");
       setIsPaused(false);
     }
   }, [matchingCards, numOfPairs]);
+
+  // Pause game when pressing on F9
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "F9") {
+        pauseGame(); // Call your function
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    // Cleanup the event listener on unmount
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [pauseGame]);
 
   async function startGame(e) {
     setLevel(level);
@@ -139,7 +177,12 @@ export default function App() {
     document.getElementById("modal").showModal();
   }
 
+  function resumeGame() {
+    setIsPaused(false);
+  }
+
   function restartGame() {
+    setIsPaused(false);
     setIsGameOn(false);
     setIsGameOver(false);
     setSelectedCards([]);
@@ -157,7 +200,15 @@ export default function App() {
 
   return (
     <Main>
-      <Header isGameOn={isGameOn} onPause={pauseGame} />
+      <Header
+        isGameOn={isGameOn}
+        onPause={pauseGame}
+        onRestart={() => {
+          setIsPaused(true);
+          document.getElementById("modal_restart").showModal();
+        }}
+      />
+      <Timer time={time} isGameOn={isGameOn} />
       <Form
         onStartGame={startGame}
         onSelectLevel={handleRadioChange}
@@ -178,8 +229,31 @@ export default function App() {
         height={height}
         isGameOver={isGameOver}
         onStartGame={restartGame}
+        result={result}
       />
-      <Modal />
+      <Modal resumeGame={resumeGame} />
+      <dialog id="modal_restart" className="modal modal-bottom sm:modal-middle">
+        <div className="modal-box">
+          <h2 className="font-bold  text-2xl text-center">Restart Game?</h2>
+          <p className="py-4 text-center">You'll lose all your game progress</p>
+          <div className="modal-action">
+            <form method="dialog" className="flex gap-4">
+              <button
+                className="btn btn-outline btn-secondary"
+                onClick={restartGame}
+              >
+                Yes, I'm sure
+              </button>
+              <button
+                className="btn btn-active btn-secondary"
+                onClick={resumeGame}
+              >
+                Cancel
+              </button>
+            </form>
+          </div>
+        </div>
+      </dialog>
     </Main>
   );
 }

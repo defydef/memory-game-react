@@ -149,7 +149,7 @@ select:focus {
 Game
 ============================*/
 .card-container {
-  padding: 1vw;
+  padding: 1.5vw;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   gap: 1em;

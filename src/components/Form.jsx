@@ -12,8 +12,8 @@ export default function Form({
 }) {
   return (
     !isGameOn && (
-      <form className="flex flex-col items-center gap-8 pt-2">
-        <div>Please select a level</div>
+      <form className="flex flex-col items-center gap-8 pt-8">
+        <div className="text-xl">Please select a level</div>
         <LevelOptions submitLevel={onSelectLevel} level={level} />
         <IconType submitIconType={onSelectIconType} />
         <RegularButton handleClick={onStartGame} iconGroup={iconGroup}>
