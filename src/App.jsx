@@ -15,8 +15,8 @@ export default function App() {
   const [isGameOver, setIsGameOver] = useState(false);
   const [level, setLevel] = useState("easy");
   const [isPaused, setIsPaused] = useState(false);
+  const [iconGroup, setIconGroup] = useState("");
 
-  const group = "animals-nature";
   const { width, height } = useWindowSize();
   const numOfPairs =
     level === "easy" ? 5 : level === "medium" ? 10 : level === "hard" ? 20 : -1;
@@ -50,7 +50,7 @@ export default function App() {
     if (!isPaused) {
       try {
         const response = await fetch(
-          `/api/emojis?group=${encodeURIComponent(group)}`
+          `/api/emojis?group=${encodeURIComponent(iconGroup)}`
         );
 
         if (!response.ok) {
@@ -151,14 +151,20 @@ export default function App() {
     setLevel(e.target.value);
   };
 
+  const handleIconGroupChange = (e) => {
+    setIconGroup(e.target.value);
+  };
+
   return (
     <Main>
       <Header isGameOn={isGameOn} onPause={pauseGame} />
       <Form
         onStartGame={startGame}
         onSelectLevel={handleRadioChange}
+        onSelectIconType={handleIconGroupChange}
         isGameOn={isGameOn}
         level={level}
+        iconGroup={iconGroup}
       />
       <MemoryCard
         handleClick={turnCard}
